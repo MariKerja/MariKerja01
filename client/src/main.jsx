@@ -12,6 +12,7 @@ import ActivityE from "/routes/ActivityE.jsx";
 import Login from "/routes/Login.jsx";
 import Register from "/routes/Register.jsx";
 import JobDetail from "/routes/JobDetail.jsx";
+import PostJob from "/routes/PostJob.jsx";
 import { Toaster } from "react-hot-toast";
 import { UserContextProvider, UserContext } from "/context/userContext";
 import "./index.css";
@@ -71,6 +72,10 @@ const router = createBrowserRouter([
       {
         path: "/job/:id",
         element: <JobDetail />,
+      },
+      {
+        path: "/activity/postjob",
+        element: <PostJob />,
       },
     ],
   },

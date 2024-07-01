@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import TopNav from "../src/components/TopNav";
+import { Link } from "react-router-dom";
 
 export default function PostJob() {
   const navigate = useNavigate();
@@ -18,35 +19,6 @@ export default function PostJob() {
     endSalary: "",
     userId: "",
   });
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth <= 718) {
-        setShowSidebar(false);
-      } else {
-        setShowSidebar(true);
-      }
-    };
-    window.addEventListener("resize", handleResize);
-    handleResize();
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  // useEffect(() => {
-  //     const fetchUserId = async () => {
-  //         try {
-  //             const response = await axios.get('http://localhost:8000/api/getUserIdFromToken');
-  //             const userId = response.data.id; // Assuming the API returns user ID in 'id' field
-  //             setData(prevData => ({ ...prevData, userId }));
-  //         } catch (error) {
-  //             console.error('Error getting user ID:', error);
-  //         }
-  //     };
-
-  //     // Fetch user profile on component mount
-  //     fetchUserId();
-  //     }, []);
-
   const handleSubmit = async () => {
     try {
       await axios.post("/postjob", data);
@@ -58,8 +30,7 @@ export default function PostJob() {
 
   return (
     <div className="flex h-screen bg-white">
-      <Sidebar showSidebar={showSidebar} />
-      <div className={`flex-1 ${showSidebar ? "pl-64" : ""}`}>
+      <div>
         <TopNav title="Post a job" href="/activitye" />
         <div className="flex-1 p-8 text-left">
           <div className="mt-10">

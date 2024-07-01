@@ -21,6 +21,12 @@ export default function ProfileE() {
     // Cleanup function
     return () => window.removeEventListener("resize", handleResize);
   }, []); // Empty dependency array to run only once on component mount
+  useEffect(() => {
+    fetch('http://localhost:8000/jobs') // Adjust the URL as needed
+      .then(response => response.json())
+      .then(data => setJobs(data))
+      .catch(error => console.error("There was an error!", error));
+  }, []); // Empty dependency array to run only once on component mount
 
 
   return (

@@ -4,6 +4,7 @@ import { Sidebar } from '../components/SideBar';
 
 export default function ActivityE() {
   const [showSidebar, setShowSidebar] = useState(true);
+    const [jobs, setJobs] = useState([]);
   useEffect(() => {
     const handleResize = () => {
       // Check screen width and toggle showSidebar accordingly
@@ -19,6 +20,12 @@ export default function ActivityE() {
 
     // Cleanup function
     return () => window.removeEventListener("resize", handleResize);
+  }, []); // Empty dependency array to run only once on component mount
+  useEffect(() => {
+    fetch('http://localhost:8000/jobs') // Adjust the URL as needed
+      .then(response => response.json())
+      .then(data => setJobs(data))
+      .catch(error => console.error("There was an error!", error));
   }, []); // Empty dependency array to run only once on component mount
 
 
@@ -52,31 +59,15 @@ export default function ActivityE() {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td className="border px-4 py-2">1</td>
-                  <td className="border px-4 py-2">Job 1</td>
-                  <td className="border px-4 py-2">Nilai, Negeri Sembilan</td>
-                  <td className="border px-4 py-2">Part time </td>
-                  <td className="border px-4 py-2">2</td>
-                  <td className="border px-4 py-2">
-                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-0.5 px-2 rounded"
-                        onClick={() => { /* your action here */ }}>X
-                    </button>
-                    </td>
-                </tr>
-                <tr>
-                  <td className="border px-4 py-2">2</td>
-                  <td className="border px-4 py-2">Job 2</td>
-                  <td className="border px-4 py-2">Nilai, Negeri Sembilan</td>
-                  <td className="border px-4 py-2">Full time </td>
-                  <td className="border px-4 py-2">3</td>
-                  <td className="border px-4 py-2">
-                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-0.5 px-2 rounded "
-                        onClick={() => { /* your action here */ }}>X
-                    </button>
-                    </td>
-                </tr>
-                {/* Add more rows as needed */}
+              {jobs.map((job, index) => (
+                  <tr key={index}>
+                    <td className="border px-4 py-2">{index + 1}</td>
+                    <td className="border px-4 py-2">{job.jobname}</td>
+                    <td className="border px-4 py-2">{job.state}</td>
+                    <td className="border px-4 py-2">{job.status}</td> {/* Assuming you have a 'type' field */}
+                    <td className="border px-4 py-2">{job.company}</td> {/* Assuming you have a 'company' field */}
+                  </tr>
+                ))}
               </tbody>
             </table>
             <button className="flex justify-start mt-4 px-4 py-2 bg-blue-500 text-white rounded"

@@ -3,6 +3,7 @@ const dotenv = require("dotenv").config();
 const cors = require("cors");
 const { mongoose } = require("mongoose");
 const cookieParser = require("cookie-parser");
+const jwt = require('jsonwebtoken');
 const { use } = require("./routes/authRoutes");
 const app = express();
 
@@ -31,6 +32,22 @@ const Job = mongoose.model('Job', new mongoose.Schema({
   endSalary: String,
   userId: String
 }));
+// app.get('/api/getUserIdFromToken', (req, res) => {
+//   // Get token from cookies
+//   const { token } = req.cookies;
+//   if (token) {
+//     jwt.verify(token, process.env.JWT_SECRET, {}, (err, decoded) => {
+//       if (err) throw err;
+//       // Get user's email, role, and user id from the token for role-based access
+//       const { _id } = decoded;
+//       res.json({ _id, });
+//     });
+//   } else {
+//     res.json(null);
+//   }
+// });
+
+
 // Fetch all jobs
 app.get('/jobs', async (req, res) => {
   try {

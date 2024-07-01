@@ -1,3 +1,4 @@
+// import jwt from 'jsonwebtoken';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -19,18 +20,6 @@ export default function PostJob() {
         endSalary: "",
         userId: ""
     });
-    // const getProfile = (req, res) => {
-    //     // Get token from cookies
-    //     const { token } = req.cookies;
-    //     if (token) {
-    //       jwt.verify(token, process.env.JWT_SECRET, {}, (err, user) => {
-    //         if (err) throw err;
-    //         res.json(user._id);
-    //       });
-    //     } else {
-    //       res.json(null);
-    //     }
-    //   };
 
     useEffect(() => {
         const handleResize = () => {
@@ -40,25 +29,27 @@ export default function PostJob() {
                 setShowSidebar(true);
             }
         };
-
         window.addEventListener('resize', handleResize);
         handleResize();
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    useEffect(() => {
-        const getUserIdFromToken = (token) => {
-            try {
-                const decoded = jwt.verify(token, process.env.JWT_SECRET);
-                return decoded.id; // Assuming the user ID is stored in the 'id' field of the JWT payload
-            } catch (error) {
-                console.error('Error decoding token:', error);
-                return null;
-            }
-        };
+    
+    // useEffect(() => {
+    //     const fetchUserId = async () => {
+    //         try {
+    //             const response = await axios.get('http://localhost:8000/api/getUserIdFromToken');
+    //             const userId = response.data.id; // Assuming the API returns user ID in 'id' field
+    //             setData(prevData => ({ ...prevData, userId }));
+    //         } catch (error) {
+    //             console.error('Error getting user ID:', error);
+    //         }
+    //     };
 
-        getUserIdFromToken();
-    }, []);
+    //     // Fetch user profile on component mount
+    //     fetchUserId();
+    //     }, []);
+
 
     const handleSubmit = async () => {
         try {

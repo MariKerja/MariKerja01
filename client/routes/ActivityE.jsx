@@ -11,53 +11,40 @@ export default function ActivityE() {
           {/* Search and Filter */}
           <h2 className="flex text-2xl font-bold text-left mb-4">Posted Job</h2>
           {/* Table */}
-          <table className="table-auto text-left w-full">
+          <table className="min-w-full table-auto">
             <thead>
               <tr>
-                <th className="px-4 py-2">No</th>
-                <th className="px-4 py-2">Title</th>
-                <th className="px-4 py-2">Place</th>
-                <th className="px-4 py-2">Type</th>
-                <th className="px-4 py-2">Applicant(s)</th>
-                <th className="px-4 py-2"> </th>
+                <th className="px-4 py-2 border">No</th>
+                <th className="px-4 py-2 border">Title</th>
+                <th className="px-4 py-2 border">Place</th>
+                <th className="px-4 py-2 border">Company</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td className="border px-4 py-2">1</td>
-                <td className="border px-4 py-2">Job 1</td>
-                <td className="border px-4 py-2">Nilai, Negeri Sembilan</td>
-                <td className="border px-4 py-2">Part time </td>
-                <td className="border px-4 py-2">2</td>
-                <td className="border px-4 py-2">
-                  <button
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-0.5 px-2 rounded"
-                    onClick={() => {
-                      /* your action here */
-                    }}
-                  >
-                    X
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td className="border px-4 py-2">2</td>
-                <td className="border px-4 py-2">Job 2</td>
-                <td className="border px-4 py-2">Nilai, Negeri Sembilan</td>
-                <td className="border px-4 py-2">Full time </td>
-                <td className="border px-4 py-2">3</td>
-                <td className="border px-4 py-2">
-                  <button
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-0.5 px-2 rounded "
-                    onClick={() => {
-                      /* your action here */
-                    }}
-                  >
-                    X
-                  </button>
-                </td>
-              </tr>
-              {/* Add more rows as needed */}
+              {jobs.map((jobItem, index) => (
+                <tr key={jobItem.id}>
+                  <td className="px-4 py-2 border">{index + 1}</td>
+                  <td className="px-4 py-2 border">
+                    <Link to={`/job/${jobItem.id}`}>{jobItem.title}</Link>
+                  </td>
+                  <td className="px-4 py-2 border">
+                    <Link to={`/job/${jobItem.id}`}>{jobItem.location}</Link>
+                  </td>
+                  <td className="px-4 py-2 border">
+                    <Link to={`/job/${jobItem.id}`}>{jobItem.company}</Link>
+                  </td>
+                  <td className="px-4 py-2 border">
+                    <button
+                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                      onClick={() => {
+                        /* your action here */
+                      }}
+                    >
+                      X
+                    </button>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
           <button

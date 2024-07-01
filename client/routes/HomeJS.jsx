@@ -1,5 +1,29 @@
 import { Outlet } from "react-router-dom";
 import TopNavEmpty from "../src/components/TopNavEmpty";
+import { Link } from "react-router-dom";
+import JobDetail from "./JobDetail";
+import React, { useEffect, useState } from "react";
+
+const jobs = [
+  {
+    id: 1,
+    title: "Software Engineer",
+    location: "San Francisco",
+    company: "ABC Inc.",
+  },
+  {
+    id: 2,
+    title: "Web Developer",
+    location: "New York",
+    company: "XYZ Corp.",
+  },
+  {
+    id: 3,
+    title: "Data Analyst",
+    location: "London",
+    company: "123 Co.",
+  },
+];
 
 export default function HomeJS() {
   return (
@@ -28,32 +52,30 @@ export default function HomeJS() {
               </button>
             </div>
             {/* Table */}
-            <table className="table-auto text-left w-full">
+            <table className="min-w-full table-auto">
               <thead>
                 <tr>
-                  <th className="px-4 py-2">No</th>
-                  <th className="px-4 py-2">Title</th>
-                  <th className="px-4 py-2">Place</th>
-                  <th className="px-4 py-2">Type</th>
-                  <th className="px-4 py-2">Company</th>
+                  <th className="px-4 py-2 border">No</th>
+                  <th className="px-4 py-2 border">Title</th>
+                  <th className="px-4 py-2 border">Place</th>
+                  <th className="px-4 py-2 border">Company</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td className="border px-4 py-2">1</td>
-                  <td className="border px-4 py-2">Job 1</td>
-                  <td className="border px-4 py-2">Nilai, Negeri Sembilan</td>
-                  <td className="border px-4 py-2">Part-Time</td>
-                  <td className="border px-4 py-2">Company 1</td>
-                </tr>
-                <tr>
-                  <td className="border px-4 py-2">2</td>
-                  <td className="border px-4 py-2">Job 2</td>
-                  <td className="border px-4 py-2">Nilai, Negeri Sembilan</td>
-                  <td className="border px-4 py-2">Full-Time</td>
-                  <td className="border px-4 py-2">Company 2</td>
-                </tr>
-                {/* Add more rows as needed */}
+                {jobs.map((jobItem, index) => (
+                  <tr key={jobItem.id}>
+                    <td className="px-4 py-2 border">{index + 1}</td>
+                    <td className="px-4 py-2 border">
+                      <Link to={`/job/${jobItem.id}`}>{jobItem.title}</Link>
+                    </td>
+                    <td className="px-4 py-2 border">
+                      <Link to={`/job/${jobItem.id}`}>{jobItem.location}</Link>
+                    </td>
+                    <td className="px-4 py-2 border">
+                      <Link to={`/job/${jobItem.id}`}>{jobItem.company}</Link>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

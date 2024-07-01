@@ -11,6 +11,7 @@ import ActivityJS from "/routes/ActivityJS.jsx";
 import ActivityE from "/routes/ActivityE.jsx";
 import Login from "/routes/Login.jsx";
 import Register from "/routes/Register.jsx";
+import JobDetail from "/routes/JobDetail.jsx";
 import { Toaster } from "react-hot-toast";
 import { UserContextProvider, UserContext } from "/context/userContext";
 import "./index.css";
@@ -18,6 +19,30 @@ import axios from "axios";
 
 axios.defaults.baseURL = "http://localhost:9000";
 axios.defaults.withCredentials = true;
+
+// Custom component to determine the root element based on the user role
+const RootElement = () => {
+  const { role } = useContext(UserContext);
+  return role === "job-seeker" ? <RootJS /> : <RootE />;
+};
+
+// Custom component to determine the home element based on the user role
+const HomeElement = () => {
+  const { role } = useContext(UserContext);
+  return role === "job-seeker" ? <HomeJS /> : <HomeE />;
+};
+
+// Custom component to determine the profile element based on the user role
+const ProfileElement = () => {
+  const { role } = useContext(UserContext);
+  return role === "job-seeker" ? <ProfileJS /> : <ProfileE />;
+};
+
+// Custom component to determine the activity element based on the user role
+const ActivityElement = () => {
+  const { role } = useContext(UserContext);
+  return role === "job-seeker" ? <ActivityJS /> : <ActivityE />;
+};
 
 const router = createBrowserRouter([
   {
@@ -29,39 +54,23 @@ const router = createBrowserRouter([
   },
   {
     path: "/",
-    element: (
-      <UserContext.Consumer>
-        {({ role }) => (role === "job-seeker" ? <RootJS /> : <RootE />)}
-      </UserContext.Consumer>
-    ),
+    element: <RootElement />,
     children: [
       {
         path: "/home",
-        element: (
-          <UserContext.Consumer>
-            {({ role }) => (role === "job-seeker" ? <HomeJS /> : <HomeE />)}
-          </UserContext.Consumer>
-        ),
+        element: <HomeElement />,
       },
       {
         path: "/activity",
-        element: (
-          <UserContext.Consumer>
-            {({ role }) =>
-              role === "job-seeker" ? <ActivityJS /> : <ActivityE />
-            }
-          </UserContext.Consumer>
-        ),
+        element: <ActivityElement />,
       },
       {
         path: "/profile",
-        element: (
-          <UserContext.Consumer>
-            {({ role }) =>
-              role === "job-seeker" ? <ProfileJS /> : <ProfileE />
-            }
-          </UserContext.Consumer>
-        ),
+        element: <ProfileElement />,
+      },
+      {
+        path: "/jobs:/jobId",
+        element: <JobDetail />,
       },
     ],
   },

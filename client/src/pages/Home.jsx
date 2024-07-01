@@ -1,52 +1,44 @@
 import { useState, useEffect } from "react";
 import TopNavEmpty from "../components/TopNavEmpty";
-import { Sidebar } from '../components/SideBar'; 
+import { Sidebar } from '../components/SideBar';
 
 export default function Home() {
   const [showSidebar, setShowSidebar] = useState(true);
+  const [jobs, setJobs] = useState([]); // State to hold fetched jobs
 
   useEffect(() => {
     const handleResize = () => {
-      // Check screen width and toggle showSidebar accordingly
-      if (window.innerWidth <= 718) { // Adjust the breakpoint as needed
+      if (window.innerWidth <= 718) {
         setShowSidebar(false);
       } else {
         setShowSidebar(true);
       }
     };
 
-    // Add event listener for window resize
     window.addEventListener("resize", handleResize);
-
-    // Cleanup function
     return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Fetch jobs from backend
+  useEffect(() => {
+    fetch('http://localhost:8000/jobs') // Adjust the URL as needed
+      .then(response => response.json())
+      .then(data => setJobs(data))
+      .catch(error => console.error("There was an error!", error));
   }, []); // Empty dependency array to run only once on component mount
+
 
   return (
     <div className="flex h-screen bg-white">
-      {/* Sidebar */}
       <Sidebar showSidebar={showSidebar} />
-
-
-      {/* Content */}
       <div className={`flex-1 ${showSidebar ? 'pl-64' : ''}`}>
-        {/* Sticky Navigation Bar */}
         <TopNavEmpty title="Home" />
         <div className="flex-1 p-8">
-          <div className=" mt-10">
-            {/* Search and Filter */}
+          <div className="mt-10">
             <h2 className="flex text-2xl font-bold text-left mb-4">
-              List of all job
+              List of all jobs
             </h2>
-            <div className="flex mb-4">
-              <input type="text" placeholder="Search..." className="px-4 py-2 border rounded-lg mr-4" />
-              <select className="px-4 py-2 border rounded-lg">
-                <option value="place">Place</option>
-                <option value="name">Name</option>
-              </select>
-              <button className="px-4 py-2 bg-blue-500 text-white rounded-lg ml-4">Search</button>
-            </div>
-            {/* Table */}
+            {/* Display Jobs Here */}
             <table className="table-auto text-left w-full">
               <thead>
                 <tr>
@@ -58,26 +50,19 @@ export default function Home() {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td className="border px-4 py-2">1</td>
-                  <td className="border px-4 py-2">Job 1</td>
-                  <td className="border px-4 py-2">Nilai, Negeri Sembilan</td>
-                  <td className="border px-4 py-2">Part-Time</td>
-                  <td className="border px-4 py-2">Company 1</td>
-                </tr>
-                <tr>
-                  <td className="border px-4 py-2">2</td>
-                  <td className="border px-4 py-2">Job 2</td>
-                  <td className="border px-4 py-2">Nilai, Negeri Sembilan</td>
-                  <td className="border px-4 py-2">Full-Time</td>
-                  <td className="border px-4 py-2">Company 2</td>
-                </tr>
-                {/* Add more rows as needed */}
+                {jobs.map((job, index) => (
+                  <tr key={index}>
+                    <td className="border px-4 py-2">{index + 1}</td>
+                    <td className="border px-4 py-2">{job.jobname}</td>
+                    <td className="border px-4 py-2">{job.state}</td>
+                    <td className="border px-4 py-2">{job.status}</td> {/* Assuming you have a 'type' field */}
+                    <td className="border px-4 py-2">{job.company}</td> {/* Assuming you have a 'company' field */}
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
         </div>
-
       </div>
     </div>
   );

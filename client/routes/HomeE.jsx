@@ -1,33 +1,42 @@
-import { Outlet } from "react-router-dom";
+import { useState, useEffect } from "react";
 import TopNavEmpty from "../src/components/TopNavEmpty";
 
 export default function HomeE() {
+  const [showSidebar, setShowSidebar] = useState(true);
+  const [jobs, setJobs] = useState([]); // State to hold fetched jobs
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 718) {
+        setShowSidebar(false);
+      } else {
+        setShowSidebar(true);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Fetch jobs from backend
+  useEffect(() => {
+    fetch("http://localhost:8000/jobs") // Adjust the URL as needed
+      .then((response) => response.json())
+      .then((data) => setJobs(data))
+      .catch((error) => console.error("There was an error!", error));
+  }, []); // Empty dependency array to run only once on component mount
+
   return (
     <div className="flex h-screen bg-white">
-      <TopNavEmpty title="Home" />{" "}
-      <div>
-        {/* Sticky Navigation Bar */}
+      <Sidebar showSidebar={showSidebar} />
+      <div className={`flex-1 ${showSidebar ? "pl-64" : ""}`}>
+        <TopNavEmpty title="Home" />
         <div className="flex-1 p-8">
-          <div className=" mt-10">
-            {/* Search and Filter */}
+          <div className="mt-10">
             <h2 className="flex text-2xl font-bold text-left mb-4">
-              Available Jobs{" "}
+              List of all jobs
             </h2>
-            <div className="flex mb-4">
-              <input
-                type="text"
-                placeholder="Search..."
-                className="px-4 py-2 border rounded-lg mr-4"
-              />
-              <select className="px-4 py-2 border rounded-lg">
-                <option value="place">Place</option>
-                <option value="name">Name</option>
-              </select>
-              <button className="px-4 py-2 bg-blue-500 text-white rounded-lg ml-4">
-                Search
-              </button>
-            </div>
-            {/* Table */}
+            {/* Display Jobs Here */}
             <table className="table-auto text-left w-full">
               <thead>
                 <tr>
@@ -39,26 +48,23 @@ export default function HomeE() {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td className="border px-4 py-2">1</td>
-                  <td className="border px-4 py-2">Job 1</td>
-                  <td className="border px-4 py-2">Nilai, Negeri Sembilan</td>
-                  <td className="border px-4 py-2">Part-Time</td>
-                  <td className="border px-4 py-2">Company 1</td>
-                </tr>
-                <tr>
-                  <td className="border px-4 py-2">2</td>
-                  <td className="border px-4 py-2">Job 2</td>
-                  <td className="border px-4 py-2">Nilai, Negeri Sembilan</td>
-                  <td className="border px-4 py-2">Full-Time</td>
-                  <td className="border px-4 py-2">Company 2</td>
-                </tr>
-                {/* Add more rows as needed */}
+                {jobs.map((job, index) => (
+                  <tr key={index}>
+                    <td className="border px-4 py-2">{index + 1}</td>
+                    <td className="border px-4 py-2">
+                      <Link to={`/job/${job.jobId}`}>{job.jobname}</Link>
+                    </td>
+                    <td className="border px-4 py-2">{job.state}</td>
+                    <td className="border px-4 py-2">{job.status}</td>
+                    {/* Assuming you have a 'type' field */}
+                    <td className="border px-4 py-2">{job.company}</td>
+                    {/* Assuming you have a 'company' field */}
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
         </div>
-        <Outlet />
       </div>
     </div>
   );

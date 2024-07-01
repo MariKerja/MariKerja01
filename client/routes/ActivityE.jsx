@@ -1,3 +1,5 @@
+import TopNavEmpty from "../src/components/TopNavEmpty";
+
 export default function ActivityE() {
   return (
     <div className="flex h-screen bg-white">

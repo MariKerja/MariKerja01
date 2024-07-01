@@ -60,18 +60,74 @@ export default function Home() {
               <tbody>
                 <tr>
                   <td className="border px-4 py-2">1</td>
-                  <td className="border px-4 py-2">Job 1</td>
+                  <td className="border px-4 py-2">Cashier</td>
                   <td className="border px-4 py-2">Nilai, Negeri Sembilan</td>
                   <td className="border px-4 py-2">Part-Time</td>
-                  <td className="border px-4 py-2">Company 1</td>
+                  <td className="border px-4 py-2">Kedai Runcit Ah Leong</td>
                 </tr>
                 <tr>
                   <td className="border px-4 py-2">2</td>
-                  <td className="border px-4 py-2">Job 2</td>
-                  <td className="border px-4 py-2">Nilai, Negeri Sembilan</td>
+                  <td className="border px-4 py-2">Tukang Masak</td>
+                  <td className="border px-4 py-2">Sepang, Selangor</td>
                   <td className="border px-4 py-2">Full-Time</td>
-                  <td className="border px-4 py-2">Company 2</td>
+                  <td className="border px-4 py-2">Pasta Kak Gee</td>
                 </tr>
+                <tr>
+                  <td className="border px-4 py-2">3</td>
+                  <td className="border px-4 py-2">Sales Assistant</td>
+                  <td className="border px-4 py-2">Seremban, Negeri Sembilan</td>
+                  <td className="border px-4 py-2">Part-Time</td>
+                  <td className="border px-4 py-2">ABC Retail</td>
+                </tr>
+                <tr>
+                  <td className="border px-4 py-2">4</td>
+                  <td className="border px-4 py-2">Waiter/Waitress</td>
+                  <td className="border px-4 py-2">Seri Kembangan, Selangor</td>
+                  <td className="border px-4 py-2">Full-Time</td>
+                  <td className="border px-4 py-2">Bistro 123</td>
+                </tr>
+                <tr>
+                  <td className="border px-4 py-2">5</td>
+                  <td className="border px-4 py-2">Receptionist</td>
+                  <td className="border px-4 py-2">Putrajaya</td>
+                  <td className="border px-4 py-2">Part-Time</td>
+                  <td className="border px-4 py-2">Hotel Bliss</td>
+              </tr>
+              <tr>
+                <td className="border px-4 py-2">6</td>
+                <td className="border px-4 py-2">Barista</td>
+                <td className="border px-4 py-2">Cyberjaya, Selangor</td>
+                <td className="border px-4 py-2">Full-Time</td>
+                <td className="border px-4 py-2">Cafe Mocha</td>
+              </tr>
+              <tr>
+                <td className="border px-4 py-2">7</td>
+                <td className="border px-4 py-2">Delivery Driver</td>
+                <td className="border px-4 py-2">Bangi, Selangor</td>
+                <td className="border px-4 py-2">Part-Time</td>
+                <td className="border px-4 py-2">Fast Delivery</td>
+              </tr>
+              <tr>
+                <td className="border px-4 py-2">8</td>
+                <td className="border px-4 py-2">Cleaner</td>
+                <td className="border px-4 py-2">Port Dickson, Negeri Sembilan</td>
+                <td className="border px-4 py-2">Full-Time</td>
+                <td className="border px-4 py-2">CleanCo Services</td>
+              </tr>
+              <tr>
+                <td className="border px-4 py-2">9</td>
+                <td className="border px-4 py-2">Security Guard</td>
+                <td className="border px-4 py-2">Klang, Selangor</td>
+                <td className="border px-4 py-2">Part-Time</td>
+                <td className="border px-4 py-2">Secure Solutions</td>
+              </tr>
+              <tr>
+                <td className="border px-4 py-2">10</td>
+                <td className="border px-4 py-2">Shop Assistant</td>
+                <td className="border px-4 py-2">Kajang, Selangor</td>
+                <td className="border px-4 py-2">Full-Time</td>
+                <td className="border px-4 py-2">Happy Mart</td>
+              </tr>
                 {/* Add more rows as needed */}
               </tbody>
             </table>

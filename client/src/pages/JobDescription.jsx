@@ -57,6 +57,7 @@ export default function JobDescription() {
                             </label>
                             <a className="w-1/2 block  bg-white rounded border border-0.25 border-gray-400 text-black py-1 px-3">
                pencari berkat
+               {/* {job?.company?.name} */}
               </a>
                         </div>
                         <div className="w-full flex flex-col mb-4">
@@ -65,6 +66,37 @@ export default function JobDescription() {
                             </label>
                              <a className="w-2/3 h-40 block bg-white rounded border border-0.25 border-gray-400 text-black py-1 px-3 duration-200 ease-in-out content-start text-left">
                                 Muniir Ahmadi
+                 {/* <div className='my-6'>
+            {selected === "0" ? (
+              <>
+                <p className='text-xl font-semibold'>Job Decsription</p>
+
+                <span className='text-base'>{job?.detail[0]?.desc}</span>
+
+                {job?.detail[0]?.requirement && (
+                  <>
+                    <p className='text-xl font-semibold mt-8'>Requirement</p>
+                    <span className='text-base'>
+                      {job?.detail[0]?.requirement}
+                    </span>
+                  </>
+                )}
+              </>
+            ) : (
+              <>
+                <div className='mb-6 flex flex-col'>
+                  <p className='text-xl text-blue-600 font-semibold'>
+                    {job?.company?.name}
+                  </p>
+                  <span className='text-base'>{job?.company?.location}</span>
+                  <span className='text-sm'>{job?.company?.email}</span>
+                </div>
+
+                <p className='text-xl font-semibold'>About Company</p>
+                <span>{job?.company?.about}</span>
+              </>
+            )}
+          </div> */}
                             </a>
                         </div>
                         <div className="w-full flex flex-col mb-4">
@@ -73,6 +105,37 @@ export default function JobDescription() {
                             </label>
                             <a className="w-2/3 h-40 block bg-white rounded border border-0.25 border-gray-400 text-black py-1 px-3 duration-200 ease-in-out content-start text-left">
                                 Semangat jiwa dan raga
+                {/* <div className='my-6'>
+            {selected === "0" ? (
+              <>
+                <p className='text-xl font-semibold'>Job Decsription</p>
+
+                <span className='text-base'>{job?.detail[0]?.desc}</span>
+
+                {job?.detail[0]?.requirement && (
+                  <>
+                    <p className='text-xl font-semibold mt-8'>Requirement</p>
+                    <span className='text-base'>
+                      {job?.detail[0]?.requirement}
+                    </span>
+                  </>
+                )}
+              </>
+            ) : (
+              <>
+                <div className='mb-6 flex flex-col'>
+                  <p className='text-xl text-blue-600 font-semibold'>
+                    {job?.company?.name}
+                  </p>
+                  <span className='text-base'>{job?.company?.location}</span>
+                  <span className='text-sm'>{job?.company?.email}</span>
+                </div>
+
+                <p className='text-xl font-semibold'>About Company</p>
+                <span>{job?.company?.about}</span>
+              </>
+            )}
+          </div> */}
                             </a>
                         </div>
                         <div className="w-full flex flex-col mb-4">
@@ -82,6 +145,7 @@ export default function JobDescription() {
 
                              <a className="w-1/3  block bg-white rounded border border-0.25 border-gray-400 text-black py-1 px-3 duration-200 ease-in-out content-start text-left">
                                 Part
+                {/* {job?.jobType} */}
                             </a>
                         </div>
                         <div className="flex gap-2">
@@ -105,6 +169,7 @@ export default function JobDescription() {
                         <div className="mb-4">
                             <label htmlFor="Address" className="justify-start block text-black font-medium mb-0">
                                 Salary
+                    {/* {job?.salary} */}
                             </label>
                             <div className="flex gap-2">
                                 <div className="mb-4 w-1/4">

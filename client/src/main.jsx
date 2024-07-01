@@ -17,7 +17,7 @@ import { UserContextProvider, UserContext } from "/context/userContext";
 import "./index.css";
 import axios from "axios";
 
-axios.defaults.baseURL = "http://localhost:9000";
+axios.defaults.baseURL = "http://localhost:8000";
 axios.defaults.withCredentials = true;
 
 // Custom component to determine the root element based on the user role

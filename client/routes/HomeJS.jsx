@@ -53,5 +53,3 @@ export default function HomeE() {
     </div>
   );
 }
-`/job/$
-                      {job._id}`;

@@ -1,22 +1,9 @@
 import { useState, useEffect } from "react";
 import TopNavEmpty from "../src/components/TopNavEmpty";
+import { Link } from "react-router-dom";
 
 export default function HomeE() {
-  const [showSidebar, setShowSidebar] = useState(true);
   const [jobs, setJobs] = useState([]); // State to hold fetched jobs
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth <= 718) {
-        setShowSidebar(false);
-      } else {
-        setShowSidebar(true);
-      }
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   // Fetch jobs from backend
   useEffect(() => {
@@ -28,8 +15,7 @@ export default function HomeE() {
 
   return (
     <div className="flex h-screen bg-white">
-      <Sidebar showSidebar={showSidebar} />
-      <div className={`flex-1 ${showSidebar ? "pl-64" : ""}`}>
+      <div>
         <TopNavEmpty title="Home" />
         <div className="flex-1 p-8">
           <div className="mt-10">
@@ -52,13 +38,11 @@ export default function HomeE() {
                   <tr key={index}>
                     <td className="border px-4 py-2">{index + 1}</td>
                     <td className="border px-4 py-2">
-                      <Link to={`/job/${job.jobId}`}>{job.jobname}</Link>
+                      <Link to={`/job/${job._id}`}>{job.jobname}</Link>
                     </td>
                     <td className="border px-4 py-2">{job.state}</td>
                     <td className="border px-4 py-2">{job.status}</td>
-                    {/* Assuming you have a 'type' field */}
                     <td className="border px-4 py-2">{job.company}</td>
-                    {/* Assuming you have a 'company' field */}
                   </tr>
                 ))}
               </tbody>

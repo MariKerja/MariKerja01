@@ -1,5 +1,5 @@
 import TopNavEmpty from "../src/components/TopNavEmpty";
-
+import { Link } from "react-router-dom";
 export default function ActivityE() {
   return (
     <div className="flex h-screen bg-white">
@@ -60,12 +60,11 @@ export default function ActivityE() {
               {/* Add more rows as needed */}
             </tbody>
           </table>
-          <button
-            className="flex justify-start mt-4 px-4 py-2 bg-blue-500 text-white rounded"
-            onClick={() => (window.location.href = "/postjob")}
-          >
-            Post a job
-          </button>
+          <Link to="/activity/postjob">
+            <a className="flex justify-start mt-4 px-4 py-2 bg-blue-500 text-white rounded">
+              Post a job
+            </a>
+          </Link>
         </div>
       </div>
     </div>

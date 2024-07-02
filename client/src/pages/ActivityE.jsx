@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
-import TopNavEmpty from '../components/TopNavEmpty';
-import { Sidebar } from '../components/SideBar'; 
+import TopNavEmpty from "../components/TopNavEmpty";
+import { Sidebar } from "../components/SideBar";
 
 export default function ActivityE() {
   const [showSidebar, setShowSidebar] = useState(true);
   useEffect(() => {
     const handleResize = () => {
       // Check screen width and toggle showSidebar accordingly
-      if (window.innerWidth <= 718) { // Adjust the breakpoint as needed
+      if (window.innerWidth <= 718) {
+        // Adjust the breakpoint as needed
         setShowSidebar(false);
       } else {
         setShowSidebar(true);
@@ -21,15 +22,13 @@ export default function ActivityE() {
     return () => window.removeEventListener("resize", handleResize);
   }, []); // Empty dependency array to run only once on component mount
 
-
   return (
     <div className="flex h-screen bg-white">
       {/* Sidebar */}
       <Sidebar showSidebar={showSidebar} />
 
-
       {/* Content */}
-      <div className={`flex-1 ${showSidebar ? 'pl-64' : ''}`}>
+      <div className={`flex-1 ${showSidebar ? "pl-64" : ""}`}>
         {/* Sticky Navigation Bar */}
         <TopNavEmpty title="Activity" />
         {/* User Information */}
@@ -59,10 +58,15 @@ export default function ActivityE() {
                   <td className="border px-4 py-2">Part time </td>
                   <td className="border px-4 py-2">2</td>
                   <td className="border px-4 py-2">
-                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-0.5 px-2 rounded"
-                        onClick={() => { /* your action here */ }}>X
+                    <button
+                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-0.5 px-2 rounded"
+                      onClick={() => {
+                        /* your action here */
+                      }}
+                    >
+                      X
                     </button>
-                    </td>
+                  </td>
                 </tr>
                 <tr>
                   <td className="border px-4 py-2">2</td>
@@ -71,16 +75,23 @@ export default function ActivityE() {
                   <td className="border px-4 py-2">Full time </td>
                   <td className="border px-4 py-2">3</td>
                   <td className="border px-4 py-2">
-                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-0.5 px-2 rounded "
-                        onClick={() => { /* your action here */ }}>X
+                    <button
+                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-0.5 px-2 rounded "
+                      onClick={() => {
+                        /* your action here */
+                      }}
+                    >
+                      X
                     </button>
-                    </td>
+                  </td>
                 </tr>
                 {/* Add more rows as needed */}
               </tbody>
             </table>
-            <button className="flex justify-start mt-4 px-4 py-2 bg-blue-500 text-white rounded"
-            onClick={() => window.location.href='/postjob'}>
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              onClick={() => (window.location.href = "/postjob")}
+            >
               Post a job
             </button>
           </div>

@@ -24,7 +24,7 @@ export default function PostJob() {
     try {
       await axios.post("/postjob", data);
       toast.success("Job posted successfully!"); // Display success toast notification
-      navigate("/activitye");
+      navigate("/activity");
     } catch (error) {
       console.error("Error posting job:", error);
       toast.error("Failed to post the job."); // Display error toast notification

@@ -1,5 +1,4 @@
 import TopNavEmpty from "../src/components/TopNavEmpty";
-import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "../context/userContext";
 import axios from "axios";
@@ -43,15 +42,14 @@ export default function ActivityE() {
   };
 
   return (
-    <div className="flex h-screen w-screen bg-gray-50">
-      <Toaster position="bottom-right" />
+    <div className="flex h-screen bg-white">
       {/* Sticky Navigation Bar */}
       <TopNavEmpty title="Activity" />
       {/* User Information */}
-      <div className="flex p-8 w-full">
-        <div className="space-y-4">
+      <div className="flex-1 p-8">
+        <div className=" mt-10">
           {/* Search and Filter */}
-          <h2 className="text-2xl font-bold">Posted Jobs</h2>
+          <h2 className="flex text-2xl font-bold text-left mb-4">Posted Job</h2>
           {/* Table */}
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">

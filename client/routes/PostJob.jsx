@@ -1,12 +1,12 @@
-// import jwt from 'jsonwebtoken';
-import { useState, useEffect } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../context/userContext"; // Assuming the correct path to userContext
 import axios from "axios";
-import TopNav from "../src/components/TopNav";
-import { Link } from "react-router-dom";
+import { toast } from "react-hot-toast"; // Import toast from react-toastify
 
 export default function PostJob() {
   const navigate = useNavigate();
+  const { id } = useContext(UserContext);
   const [data, setData] = useState({
     jobname: "",
     address: "",
@@ -17,21 +17,23 @@ export default function PostJob() {
     district: "",
     startSalary: "",
     endSalary: "",
-    userId: "",
+    userId: id,
   });
+
   const handleSubmit = async () => {
     try {
       await axios.post("/postjob", data);
-      navigate("/activitye");
+      toast.success("Job posted successfully!"); // Display success toast notification
+      navigate("/activity");
     } catch (error) {
       console.error("Error posting job:", error);
+      toast.error("Failed to post the job."); // Display error toast notification
     }
   };
 
   return (
     <div className="flex h-screen bg-white">
       <div>
-        <TopNav title="Post a job" href="/activitye" />
         <div className="flex-1 p-8 text-left">
           <div className="mt-10">
             {/* Form fields... */}
@@ -138,17 +140,6 @@ export default function PostJob() {
                   onChange={(e) => setData({ ...data, state: e.target.value })}
                   style={{ textAlign: "start" }}
                 />
-                {/* <select
-                                    name="state"
-                                    id="state"
-                                    required
-                                    value={data.state}
-                                    onChange={(e) => setData({ ...data, state: e.target.value })}
-                                    className=" w-2/3 px-3 py-2 border border-gray-700 bg-white text-black rounded-md"
-                                >
-                                    <option value="Part time">Negeri Sembilan</option>
-                                    <option value="Full time">Melaka</option>
-                                </select> */}
               </div>
               <div className="mb-4 w-1/4">
                 <label
@@ -167,17 +158,6 @@ export default function PostJob() {
                   }
                   style={{ textAlign: "start" }}
                 />
-                {/* <select
-                                    name="district"
-                                    id="district"
-                                    required
-                                    value={data.district}
-                                    onChange={(e) => setData({ ...data, district: e.target.value })}
-                                    className=" w-2/3 px-3 py-2 border border-gray-700 bg-white text-black rounded-md"
-                                >
-                                    <option value="N9">Nilai</option>
-                                    <option value="Melaka">Seremban</option>
-                                </select> */}
               </div>
             </div>
             <div className="mb-4">
@@ -224,7 +204,7 @@ export default function PostJob() {
               </button>
               <button
                 className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
-                onClick={() => navigate("/activitye")}
+                onClick={() => navigate("/activity")}
               >
                 Cancel
               </button>

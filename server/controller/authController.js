@@ -122,16 +122,17 @@ const loginUser = async (req, res) => {
   }
 };
 
-// Get profile endpoint
 const getProfile = (req, res) => {
   // Get token from cookies
   const { token } = req.cookies;
   if (token) {
     jwt.verify(token, process.env.JWT_SECRET, {}, (err, decoded) => {
-      if (err) throw err;
+      if (err) {
+        throw err;
+      }
       // Get user's email and role from the token for role-based access
-      const { email, role } = decoded;
-      res.json({ email, role });
+      const { email, role, id } = decoded;
+      res.json({ email, role, id });
     });
   } else {
     res.json(null);

@@ -22,7 +22,8 @@ export default function PostJob() {
   const handleSubmit = async () => {
     try {
       await axios.post("/postjob", data);
-      navigate("/activitye");
+      toast.success("Job posted successfully!"); // Display success toast notification
+      navigate("/activity");
     } catch (error) {
       console.error("Error posting job:", error);
     }

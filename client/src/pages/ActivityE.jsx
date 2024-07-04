@@ -1,89 +1,92 @@
-import { useState, useEffect } from "react";
-import TopNavEmpty from '../components/TopNavEmpty';
-import { Sidebar } from '../components/SideBar'; 
+import TopNavEmpty from "../components/TopNavEmpty";
+import { useState, useEffect, useContext } from "react";
+import { Link } from "react-router-dom";
+import { UserContext } from "../../context/userContext";
 
 export default function ActivityE() {
-  const [showSidebar, setShowSidebar] = useState(true);
+  const [jobs, setJobs] = useState([]);
+  const { user } = useContext(UserContext); // Use useContext to access the current user
+
   useEffect(() => {
-    const handleResize = () => {
-      // Check screen width and toggle showSidebar accordingly
-      if (window.innerWidth <= 718) { // Adjust the breakpoint as needed
-        setShowSidebar(false);
-      } else {
-        setShowSidebar(true);
-      }
-    };
-    //mmm
-    // Add event listener for window resize
-    window.addEventListener("resize", handleResize);
-
-    // Cleanup function
-    return () => window.removeEventListener("resize", handleResize);
-  }, []); // Empty dependency array to run only once on component mount
-
+    fetch("http://localhost:8000/jobs") // Adjust the URL as needed
+      .then((response) => response.json())
+      .then((data) => {
+        // Filter jobs to only include those that match the current user's ID
+        const userJobs = data.filter((job) => job.userId === user?.id);
+        setJobs(userJobs);
+      })
+      .catch((error) => console.error("There was an error!", error));
+  }, [user]); // Add user to the dependency array to refetch when the user changes
 
   return (
-    <div className="flex h-screen bg-white">
-      {/* Sidebar */}
-      <Sidebar showSidebar={showSidebar} />
-
-
-      {/* Content */}
-      <div className={`flex-1 ${showSidebar ? 'pl-64' : ''}`}>
-        {/* Sticky Navigation Bar */}
-        <TopNavEmpty title="Activity" />
-        {/* User Information */}
-        <div className="flex-1 p-8">
-          <div className=" mt-10">
-            {/* Search and Filter */}
-            <h2 className="flex text-2xl font-bold text-left mb-4">
-              Posted Job
-            </h2>
-            {/* Table */}
-            <table className="table-auto text-left w-full">
-              <thead>
+    <div className="flex h-screen w-screen bg-gray-50">
+      {/* Sticky Navigation Bar */}
+      <TopNavEmpty title="Activity" />
+      {/* User Information */}
+      <div className="flex p-8 w-full">
+        <div className="space-y-4">
+          {/* Search and Filter */}
+          <h2 className="text-2xl font-bold">Posted Jobs</h2>
+          {/* Table */}
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
                 <tr>
-                  <th className="px-4 py-2">No</th>
-                  <th className="px-4 py-2">Title</th>
-                  <th className="px-4 py-2">Place</th>
-                  <th className="px-4 py-2">Type</th>
-                  <th className="px-4 py-2">Applicant(s)</th>
-                  <th className="px-4 py-2"> </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    No
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Title
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Place
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Type
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Applicant(s)
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td className="border px-4 py-2">1</td>
-                  <td className="border px-4 py-2">Job 1</td>
-                  <td className="border px-4 py-2">Nilai, Negeri Sembilan</td>
-                  <td className="border px-4 py-2">Part time </td>
-                  <td className="border px-4 py-2">2</td>
-                  <td className="border px-4 py-2">
-                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-0.5 px-2 rounded"
-                        onClick={() => { /* your action here */ }}>X
-                    </button>
-                    </td>
-                </tr>
-                <tr>
-                  <td className="border px-4 py-2">2</td>
-                  <td className="border px-4 py-2">Job 2</td>
-                  <td className="border px-4 py-2">Nilai, Negeri Sembilan</td>
-                  <td className="border px-4 py-2">Full time </td>
-                  <td className="border px-4 py-2">3</td>
-                  <td className="border px-4 py-2">
-                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-0.5 px-2 rounded "
-                        onClick={() => { /* your action here */ }}>X
-                    </button>
-                    </td>
-                </tr>
-                {/* Add more rows as needed */}
+              <tbody className="bg-white divide-y divide-gray-200">
+                {jobs.map((job, index) => {
+                  console.log(job.id); // Assuming each job has an 'id' property
+                  return (
+                    <tr key={index}>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {index + 1}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {job.jobname}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {job.state}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {job.status}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {job.company}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <button className="inline-flex items-center px-3 py-1.5 border border-transparent text-xs leading-4 font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                          X
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
-            <button className="flex justify-start mt-4 px-4 py-2 bg-blue-500 text-white rounded"
-            onClick={() => window.location.href='/postjob'}>
-              Post a job
-            </button>
           </div>
+          <Link
+            to="/activity/postjob"
+            className="inline-flex justify-start items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          >
+            Post a job
+          </Link>
         </div>
       </div>
     </div>

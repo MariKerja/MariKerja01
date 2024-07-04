@@ -4,7 +4,7 @@ import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 
-export default function Register() {
+export default function Registerco() {
   const navigate = useNavigate();
   const [data, setData] = useState({
     firstname: "",
@@ -56,7 +56,7 @@ export default function Register() {
           password: "",
         });
         toast.success("Register Successful. Welcome!");
-        navigate("/auth/Login");
+        navigate("/login");
       }
     } catch (error) {
       console.log(error);
@@ -211,7 +211,7 @@ export default function Register() {
           </button>
         </div>
         <div className="text-center">
-          <a href="/auth/login" className="text-blue-500 hover:underline">
+          <a href="/login" className="text-blue-500 hover:underline">
             Already have an account?
           </a>
         </div>

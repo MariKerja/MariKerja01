@@ -1,37 +1,11 @@
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import TopNavEmpty from "../components/TopNavEmpty";
-import { Sidebar } from "../components/SideBar";
-
+import { Link } from "react-router-dom";
 export default function ProfileE() {
-  const [showSidebar, setShowSidebar] = useState(true);
-  useEffect(() => {
-    const handleResize = () => {
-      // Check screen width and toggle showSidebar accordingly
-      if (window.innerWidth <= 718) {
-        // Adjust the breakpoint as needed
-        setShowSidebar(false);
-      } else {
-        setShowSidebar(true);
-      }
-    };
-
-    // Add event listener for window resize
-    window.addEventListener("resize", handleResize);
-
-    // Cleanup function
-    return () => window.removeEventListener("resize", handleResize);
-  }, []); // Empty dependency array to run only once on component mount
-
   return (
     <div className="flex h-screen bg-white">
-      {/* Sidebar */}
-      <Sidebar showSidebar={showSidebar} />
-
-      {/* Content */}
-      <div className={`flex-1 ${showSidebar ? "pl-64" : ""}`}>
+      <TopNavEmpty title="Profile" />
+      <div>
         {/* Sticky Navigation Bar */}
-        <TopNavEmpty title="Profile" />
         {/* User Information */}
         <div className="flex-1 p-8 text-left  ">
           <div className="mb-10 mt-10">

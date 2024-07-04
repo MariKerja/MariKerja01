@@ -1,11 +1,37 @@
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import TopNavEmpty from "../components/TopNavEmpty";
+import { Sidebar } from "../components/SideBar";
 
 export default function ProfileE() {
+  const [showSidebar, setShowSidebar] = useState(true);
+  useEffect(() => {
+    const handleResize = () => {
+      // Check screen width and toggle showSidebar accordingly
+      if (window.innerWidth <= 718) {
+        // Adjust the breakpoint as needed
+        setShowSidebar(false);
+      } else {
+        setShowSidebar(true);
+      }
+    };
+
+    // Add event listener for window resize
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup function
+    return () => window.removeEventListener("resize", handleResize);
+  }, []); // Empty dependency array to run only once on component mount
+
   return (
     <div className="flex h-screen bg-white">
-      <TopNavEmpty title="Profile" />
-      <div>
+      {/* Sidebar */}
+      <Sidebar showSidebar={showSidebar} />
+
+      {/* Content */}
+      <div className={`flex-1 ${showSidebar ? "pl-64" : ""}`}>
         {/* Sticky Navigation Bar */}
+        <TopNavEmpty title="Profile" />
         {/* User Information */}
         <div className="flex-1 p-8 text-left  ">
           <div className="mb-10 mt-10">
@@ -62,23 +88,27 @@ export default function ProfileE() {
                 Male
               </a>
             </div>
-            <button className="mb-4 px-4 py-2 bg-blue-500 text-white rounded">
-              Edit Profile
-            </button>
+            <Link to="/editprofile">
+              <button className="mb-4 px-4 py-2 bg-blue-500 text-white rounded">
+                Edit Profile
+              </button>
+            </Link>
           </div>
 
-          {/* Resume Information */}
+          {/* Company Information */}
           <div className="mb-4">
-            <h2 className="text-2xl font-bold text-left mb-4">Resume</h2>
+            <h2 className="text-2xl font-bold text-left mb-4">
+              Company Information
+            </h2>
             <div className="w-full flex flex-col mb-4">
               <label
-                htmlFor="FullName"
+                htmlFor="CompanyName"
                 className="w-full justify-start block text-black font-medium mb-0"
               >
-                Full Name
+                Company Name
               </label>
               <a className="w-2/3 block  bg-white rounded border border-0.25 border-gray-400 text-black py-1 px-3">
-                Madisson Dull
+                Madisson Sdn Bhd
               </a>
             </div>
             <div className="w-full flex flex-col mb-4">
@@ -94,41 +124,24 @@ export default function ProfileE() {
             </div>
             <div className="w-full flex flex-col mb-4">
               <label
+                htmlFor="website"
+                className="w-full justify-start block text-black font-medium mb-0"
+              >
+                Company Website
+              </label>
+              <a className="w-2/3 block  bg-white rounded border border-0.25 border-gray-400 text-black py-1 px-3">
+                https://istudent2.usim.edu.my
+              </a>
+            </div>
+            <div className="w-full flex flex-col mb-4">
+              <label
                 htmlFor="Address"
                 className="w-full justify-start block text-black font-medium mb-0"
               >
                 Address
               </label>
-              <a className="w-2/3 block  bg-white rounded border border-0.25 border-gray-400 text-black py-1 px-3">
-                1234 Elm Street Apt. 56B Springfield, IL 62704 United States
-              </a>
-            </div>
-            <div className="w-full flex flex-col mb-4">
-              <label
-                htmlFor="AboutMe"
-                className="w-full justify-start block text-black font-medium mb-0"
-              >
-                About Me
-              </label>
               <a className="w-2/3 h-40 block bg-white rounded border border-0.25 border-gray-400 text-black py-1 px-3">
-                Employment status typically refers to whether a position is
-                full-time or part-time. Full-time employees generally work
-                between 35-40 hours per week and often receive benefits like
-                health insurance, retirement plans, and paid time off.
-              </a>
-            </div>
-            <div className="w-full flex flex-col mb-4">
-              <label
-                htmlFor="Education"
-                className="w-full justify-start block text-black font-medium mb-0"
-              >
-                Education
-              </label>
-              <a className="w-2/3 h-40 block  bg-white rounded border border-0.25 border-gray-400 text-black py-1 px-3">
-                Employment status typically refers to whether a position is
-                full-time or part-time. Full-time employees generally work
-                between 35-40 hours per week and often receive benefits like
-                health insurance, retirement plans, and paid time off.
+                1234 Elm Street Apt. 56B Springfield, IL 62704 United States
               </a>
             </div>
             <div className="w-full flex flex-col mb-4">
@@ -136,7 +149,7 @@ export default function ProfileE() {
                 htmlFor="website"
                 className="w-full justify-start block text-black font-medium mb-0"
               >
-                Persona Skill
+                About Company
               </label>
               <a className="w-2/3 h-40 block  bg-white rounded border border-0.25 border-gray-400 text-black py-1 px-3">
                 Employment status typically refers to whether a position is
@@ -146,7 +159,7 @@ export default function ProfileE() {
               </a>
             </div>
             <button className="mb-4 px-4 py-2 bg-blue-500 text-white rounded">
-              Edit Resume
+              Edit Information
             </button>
           </div>
         </div>

@@ -1,11 +1,36 @@
-import TopNavEmpty from "../components/TopNavEmpty";
+import { useState, useEffect } from "react";
+import TopNavEmpty from '../components/TopNavEmpty';
+import { Sidebar } from '../components/SideBar'; 
 
 export default function ActivityJS() {
+  const [showSidebar, setShowSidebar] = useState(true);
+  useEffect(() => {
+    const handleResize = () => {
+      // Check screen width and toggle showSidebar accordingly
+      if (window.innerWidth <= 718) { // Adjust the breakpoint as needed
+        setShowSidebar(false);
+      } else {
+        setShowSidebar(true);
+      }
+    };
+
+    // Add event listener for window resize
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup function
+    return () => window.removeEventListener("resize", handleResize);
+  }, []); // Empty dependency array to run only once on component mount
+
+
   return (
     <div className="flex h-screen bg-white">
-      <TopNavEmpty title="Activity" />
-      <div>
+      {/* Sidebar */}
+      <Sidebar showSidebar={showSidebar} />
+
+      {/* Content */}
+      <div className={`flex-1 ${showSidebar ? 'pl-64' : ''}`}>
         {/* Sticky Navigation Bar */}
+        <TopNavEmpty title="Activity" />
         {/* User Information */}
         <div className="flex-1 p-8">
           <div className=" mt-10">
@@ -34,15 +59,10 @@ export default function ActivityJS() {
                   <td className="border px-6 py-2">Lazada </td>
                   <td className="border px-6 py-2">Accepted</td>
                   <td className="border px-6 py-2">
-                    <button
-                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                      onClick={() => {
-                        /* your action here */
-                      }}
-                    >
-                      X
+                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                        onClick={() => { /* your action here */ }}>X
                     </button>
-                  </td>
+                </td>
                 </tr>
                 <tr>
                   <td className="border px-6 py-2">2</td>
@@ -51,15 +71,10 @@ export default function ActivityJS() {
                   <td className="border px-6 py-2">Lazada </td>
                   <td className="border px-6 py-2">Pending</td>
                   <td className="border px-6 py-2">
-                    <button
-                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                      onClick={() => {
-                        /* your action here */
-                      }}
-                    >
-                      X
+                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                        onClick={() => { /* your action here */ }}>X
                     </button>
-                  </td>
+                </td>
                 </tr>
                 {/* Add more rows as needed */}
               </tbody>

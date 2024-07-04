@@ -21,7 +21,7 @@ export default function Login() {
       if (data.error) {
         toast.error(data.error);
       } else {
-        setData({});
+        setData({ email: "", password: "" });
         navigate("/home");
       }
     } catch (error) {}
@@ -63,10 +63,10 @@ export default function Login() {
         </div>
         <div className="relative mb-4">
           <a
-            href="/auth/register"
+            href="/register"
             className="w-full inline-flex justify-center text-white bg-gray-300 border-0 py-2 px-6 focus:outline-none hover:bg-gray-800 hover:text-white rounded text-lg"
           >
-            Create a new account
+            Create new account
           </a>
         </div>
       </form>

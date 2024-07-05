@@ -32,7 +32,7 @@ export default function Registerco() {
       role,
     } = data;
     try {
-      const { data } = await axios.post("/register", {
+      const { data } = await axios.post("/auth/register", {
         firstname,
         lastname,
         email,
@@ -56,7 +56,7 @@ export default function Registerco() {
           password: "",
         });
         toast.success("Register Successful. Welcome!");
-        navigate("/login");
+        navigate("/auth/login");
       }
     } catch (error) {
       console.log(error);

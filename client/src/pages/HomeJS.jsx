@@ -7,7 +7,7 @@ export default function HomeE() {
 
   // Fetch jobs from backend
   useEffect(() => {
-    fetch("http://localhost:8000/jobs") // Adjust the URL as needed
+    fetch("http://localhost:8000/job") // Adjust the URL as needed
       .then((response) => response.json())
       .then((data) => setJobs(data))
       .catch((error) => console.error("There was an error!", error));

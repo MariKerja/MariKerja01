@@ -59,9 +59,15 @@ const deleteJobById = async (req, res) => {
   }
 };
 
+// Test connectivity endpoint
+function testConnectivityJob(req, res) {
+  res.json({ message: "Job controller is connected" });
+}
+
 module.exports = {
   getAllJobs,
   getJobById,
   postJob,
   deleteJobById,
+  testConnectivityJob,
 };

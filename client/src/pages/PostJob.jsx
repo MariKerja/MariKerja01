@@ -11,7 +11,7 @@ export default function PostJob() {
     address: "",
     description: "",
     requirement: "",
-    status: "Part time",
+    status: "part-time",
     state: "",
     district: "",
     startSalary: "",
@@ -20,7 +20,7 @@ export default function PostJob() {
   });
   const handleSubmit = async () => {
     try {
-      await axios.post("/postjob", data);
+      await axios.post("/jobs", data);
       toast.success("Job posted successfully!"); // Display success toast notification
       navigate("/activity");
     } catch (error) {

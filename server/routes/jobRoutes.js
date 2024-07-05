@@ -1,20 +1,13 @@
-import express from "express";
+const express = require("express");
 const router = express.Router();
-import cors from "cors";
-import jobController from "../controllers/jobController";
+const jobController = require("../controller/jobController");
 
-// CORS middleware setup
-router.use(
-  cors({
-    credentials: true,
-    origin: "http://localhost:5174", // Replace with your actual frontend URL
-  })
-);
+// Routes (full path is /jobs/...) -- defined in index.js
+router.get("/", jobController.getAllJobs); // GET all jobs, full path is /jobs
+router.get("/:id", jobController.getJobById); // GET a single job by ID, full path is /jobs/:id
+router.post("/", jobController.postJob); // POST a new job, full path is /jobs
+router.delete("/:id", jobController.deleteJobById); // DELETE a job by ID, full path is /jobs/:id
+router.get("/test", jobController.testConnectivityJob); // Test connectivity, full path is /jobs/test
 
-// Routes
-router.get("/jobs", jobController.getAllJobs); // GET all jobs
-router.get("/jobs/:id", jobController.getJobById); // GET a single job by ID
-router.post("/jobs", jobController.postJob); // POST a new job
-router.delete("/jobs/:id", jobController.deleteJobById); // DELETE a job by ID
-
-export default router;
+// Export router
+module.exports = router;

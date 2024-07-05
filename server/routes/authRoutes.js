@@ -1,25 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const cors = require("cors");
-const {
-  test,
-  registerUser,
-  loginUser,
-  getProfile,
-} = require("../controller/authController");
+const authController = require("../controller/authController");
 
-// middleware
+// Routes (full path is /auth/...) -- defined in index.js
+router.post("/register", authController.registerUser); // full path is /auth/register
+router.post("/login", authController.loginUser); // full path is /auth/login
+router.get("/profile", authController.getProfile); // full path is /auth/profile
+router.get("/", authController.testConnectivityAuth); // full path is /auth
 
-router.use(
-  cors({
-    credentials: true,
-    origin: "http://localhost:5174",
-  })
-);
-
-router.get("/", test);
-router.post("/register", registerUser);
-router.post("/login", loginUser);
-router.get("/profile", getProfile);
-
+// Export router
 module.exports = router;

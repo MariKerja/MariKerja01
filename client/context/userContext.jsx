@@ -6,17 +6,19 @@ export const UserContext = createContext({});
 export function UserContextProvider({ children }) {
   const [user, setUser] = useState(null);
   const [role, setRole] = useState("");
+  const [id, setId] = useState("");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!user) {
       axios
-        .get("/profile")
+        .get("/auth/profile")
         .then(({ data }) => {
           setUser(data);
           setRole(data.role);
+          setId(data.id);
           // show the user type and email in the console
-          console.log("User Type:", data.role, data.email);
+          console.log("User Type:", data.role, data.email, data.id);
           setLoading(false);
         })
         .catch(() => {
@@ -31,7 +33,7 @@ export function UserContextProvider({ children }) {
 
   return (
     // pass the role state to the value prop for the role-based access on the routes
-    <UserContext.Provider value={{ user, setUser, role, loading }}>
+    <UserContext.Provider value={{ user, setUser, role, loading, id }}>
       {children}
     </UserContext.Provider>
   );

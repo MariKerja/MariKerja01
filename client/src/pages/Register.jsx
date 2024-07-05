@@ -32,7 +32,7 @@ export default function Register() {
       role,
     } = data;
     try {
-      const { data } = await axios.post("/register", {
+      const { data } = await axios.post("/auth/register", {
         firstname,
         lastname,
         email,

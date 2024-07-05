@@ -22,7 +22,7 @@ const jobSchema = new mongoose.Schema({
   status: {
     type: String,
     required: true,
-    enum: ["open", "closed", "pending"],
+    enum: ["part-time", "full-time"],
   },
   state: {
     type: String,

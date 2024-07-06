@@ -1,22 +1,23 @@
-import React from "react";
+import React, { useContext } from "react";
+import { Outlet, Link } from "react-router-dom";
+import { UserContext } from "../../context/UserContext"; // Update the import path as necessary
 
-export function Sidebar({ showSidebar }) {
+export default function SideBar() {
+  const { user, loading } = useContext(UserContext);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    <div
-      className={
-        showSidebar
-          ? "fixed top-0 left-0 h-full w-64 flex-shrink-0 border-r-2 border-black-950"
-          : "hidden"
-      }
-    >
+    <div className="flex h-full">
       <div className="h-full relative w-64 flex-shrink-0 border-r-2 border-black-950">
         <div className="p-4">
           <h1 className="text-2xl font-bold text-center">MariKerja</h1>
           <ul className="mt-4">
             <li className="py-2 flex items-center">
               <Link
-                to
-                href="/home"
+                to="/"
                 className="container max-width flex items-center gap-3 px-4 py-2 hover:bg-gray-400"
               >
                 <svg
@@ -62,8 +63,7 @@ export function Sidebar({ showSidebar }) {
             </li>
             <li className="py-2 flex items-center">
               <Link
-                to
-                href="/activity"
+                to="/activity"
                 className="container max-width flex items-center gap-3 px-4 py-2 hover:bg-gray-400"
               >
                 <svg
@@ -83,33 +83,38 @@ export function Sidebar({ showSidebar }) {
                 Activity
               </Link>
             </li>
-            <li className="py-2 flex items-center">
-              <Link
-                to
-                href="login"
-                className="container max-width flex items-center gap-3 px-4 py-2 hover:bg-gray-400"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="feather feather-log-out"
+            {user && (
+              <li className="py-2 flex items-center">
+                <Link
+                  to="/logout"
+                  className="container max-width flex items-center gap-3 px-4 py-2 hover:bg-gray-400"
                 >
-                  <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-                  <polyline points="16 17 21 12 16 7"></polyline>
-                  <line x1="21" y1="12" x2="9" y2="12"></line>
-                </svg>
-                Log out
-              </Link>
-            </li>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="feather feather-log-out"
+                  >
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    <polyline points="16 17 21 12 16 7"></polyline>
+                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                  </svg>
+                  Log out
+                </Link>
+              </li>
+            )}
           </ul>
         </div>
+      </div>
+      <div className="flex-grow">
+        {/* This is where the child routes will be rendered */}
+        <Outlet />
       </div>
     </div>
   );

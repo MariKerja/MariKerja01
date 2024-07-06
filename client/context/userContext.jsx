@@ -31,9 +31,14 @@ export function UserContextProvider({ children }) {
     }
   }, [user]);
 
+  // Define isSignedIn function, which returns true if the user is signed in, or false if the user is not signed in
+  const isSignedIn = () => user !== null;
+
   return (
     // pass the role state to the value prop for the role-based access on the routes
-    <UserContext.Provider value={{ user, setUser, role, loading, id }}>
+    <UserContext.Provider
+      value={{ user, setUser, role, loading, id, isSignedIn }}
+    >
       {children}
     </UserContext.Provider>
   );

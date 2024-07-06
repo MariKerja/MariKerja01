@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
-import TopNavEmpty from "../components/TopNavEmpty";
+import TopNavEmpty from "../TopNavEmpty";
 import { Link } from "react-router-dom";
 
-export default function HomeE() {
+export default function HomeJS() {
   const [jobs, setJobs] = useState([]); // State to hold fetched jobs
 
   // Fetch jobs from backend
   useEffect(() => {
-    fetch("http://localhost:8000/job") // Adjust the URL as needed
+    fetch("http://localhost:8000/jobs") // Adjust the URL as needed
       .then((response) => response.json())
       .then((data) => setJobs(data))
       .catch((error) => console.error("There was an error!", error));

@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
-import { UserContextProvider, UserContext } from "/context/userContext";
+import { UserContextProvider, UserContext } from "/context/UserContext";
 import "./index.css";
 import Router from "/router/Router.jsx";
 import axios from "axios";

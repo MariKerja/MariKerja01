@@ -1,11 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import TopNav from "../components/TopNav";
+import { UserContext } from "../../context/UserContext";
 import { Link } from "react-router-dom";
 
 export default function PostJob() {
   const navigate = useNavigate();
+  const { id } = useContext(UserContext);
   const [data, setData] = useState({
     jobname: "",
     address: "",
@@ -16,7 +18,7 @@ export default function PostJob() {
     district: "",
     startSalary: "",
     endSalary: "",
-    userId: "",
+    userId: id,
   });
   const handleSubmit = async () => {
     try {

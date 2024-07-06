@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import TopNavEmpty from "../components/TopNavEmpty";
+import TopNavEmpty from "../TopNavEmpty";
 import { Link } from "react-router-dom";
 
 export default function HomeE() {

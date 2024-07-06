@@ -1,4 +1,4 @@
-import TopNavEmpty from "../components/TopNavEmpty";
+import TopNavEmpty from "../TopNavEmpty";
 
 export default function ActivityJS() {
   return (

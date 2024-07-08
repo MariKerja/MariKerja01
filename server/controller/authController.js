@@ -2,9 +2,11 @@ const User = require("../models/user");
 const { hashPassword, comparePassword } = require("../helpers/auth");
 const jwt = require("jsonwebtoken");
 
-// Register endpoint
+// Register endpoint, called by Register.jsx to create a new user
 const registerUser = async (req, res) => {
   try {
+    // Destructure user data from request body sent from Register.jsx
+    // so that it can be referred to directly by variable name
     const {
       firstname,
       lastname,
@@ -16,18 +18,19 @@ const registerUser = async (req, res) => {
     } = req.body;
 
     // Validation
+    // Check if first name and last name are provided
     if (!firstname || !lastname) {
       return res
         .status(400)
         .json({ error: "First name and last name are required" });
     }
-
+    // Check if password is provided and is at least 6 characters long
     if (!password || password.length < 6) {
       return res.status(400).json({
         error: "Password is required and must be at least 6 characters",
       });
     }
-
+    // Check if email is provided
     if (!email) {
       return res.status(400).json({ error: "Email is required" });
     }
@@ -81,7 +84,7 @@ const registerUser = async (req, res) => {
   }
 };
 
-// Login endpoint
+// Login endpoint, called by Login.jsx to authenticate user, set token in cookie, and respond with user data
 const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -109,6 +112,7 @@ const loginUser = async (req, res) => {
           return res.status(500).json({ error: "Failed to create token" });
         }
         // Set token in cookie and respond with user data
+        // httpOnly: true makes sure that the cookie is only accessible by the server
         res.cookie("token", token, { httpOnly: true }).json(user);
       }
     );
@@ -118,12 +122,11 @@ const loginUser = async (req, res) => {
   }
 };
 
-// Get Profile endpoint
+// Get Profile endpoint, called by UserContext.jsx to get user information
 const getProfile = (req, res) => {
-  // Get token from cookies
-  const token = req.cookies.token;
+  const token = req.cookies.token; // Retrieve token from cookie using req.cookies.token
   if (!token) {
-    return res.json(null);
+    return res.json(null); // If token is not found, respond with null, indicating that user is not logged in
   }
 
   // Verify token and extract user information
@@ -133,6 +136,7 @@ const getProfile = (req, res) => {
       return res.status(401).json({ error: "Unauthorized" });
     }
     const { email, role, id } = decoded;
+    // respond with user information: email, role, and id
     res.json({ email, role, id });
   });
 };
@@ -142,10 +146,18 @@ function testConnectivityAuth(req, res) {
   res.json({ message: "Auth controller is connected" });
 }
 
+const logoutUser = (req, res) => {
+  // Clear the token cookie
+  res.clearCookie("token", { httpOnly: true });
+  // Respond to the client that logout was successful
+  res.json({ message: "Logged out successfully" });
+};
+
 // Export functions
 module.exports = {
   registerUser,
   loginUser,
   getProfile,
+  logoutUser,
   testConnectivityAuth,
 };

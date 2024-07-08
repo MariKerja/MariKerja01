@@ -6,6 +6,7 @@ import Header from "../components/Header";
 
 export default function Register() {
   const navigate = useNavigate();
+  // Initialize state, setData is a function to update the state
   const [data, setData] = useState({
     firstname: "",
     lastname: "",
@@ -18,6 +19,7 @@ export default function Register() {
     role: "job-seeker",
   });
 
+  // Function to register a user
   const registerUser = async (e) => {
     e.preventDefault();
     const {
@@ -32,7 +34,7 @@ export default function Register() {
       role,
     } = data;
     try {
-      const { data } = await axios.post("/auth/register", {
+      const response = await axios.post("/auth/register", {
         firstname,
         lastname,
         email,
@@ -41,25 +43,28 @@ export default function Register() {
         gender,
         role,
       });
-      if (data.error) {
-        toast.error(data.error);
-      } else {
-        setData({
-          firstname: "",
-          lastname: "",
-          day: "1",
-          year: "2002",
-          month: "1",
-          gender: "Male",
-          role: "job-seeker",
-          email: "",
-          password: "",
-        });
-        toast.success("Register Successful. Welcome!");
-        navigate("/auth/Login");
-      }
+      // Assuming the server sends back a success message on successful registration
+      toast.success("Register Successful. Welcome!");
+      setData({
+        firstname: "",
+        lastname: "",
+        day: "1",
+        year: "2002",
+        month: "1",
+        gender: "Male",
+        role: "job-seeker",
+        email: "",
+        password: "",
+      });
+      navigate("/auth/login");
     } catch (error) {
-      console.log(error);
+      if (error.response && error.response.data && error.response.data.error) {
+        // Displaying the error message sent from the server
+        toast.error(error.response.data.error);
+      } else {
+        // Generic error message if the error format is unexpected
+        toast.error("An unexpected error occurred. Please try again.");
+      }
     }
   };
 

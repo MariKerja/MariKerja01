@@ -6,6 +6,7 @@ const authController = require("../controller/authController");
 router.post("/register", authController.registerUser); // full path is /auth/register
 router.post("/login", authController.loginUser); // full path is /auth/login
 router.get("/profile", authController.getProfile); // full path is /auth/profile
+router.get("/logout", authController.logoutUser); // full path is /auth/logout
 router.get("/", authController.testConnectivityAuth); // full path is /auth
 
 // Export router

@@ -4,41 +4,38 @@ import { createContext, useState, useEffect } from "react";
 export const UserContext = createContext({});
 
 export function UserContextProvider({ children }) {
-  const [user, setUser] = useState(null);
-  const [role, setRole] = useState("");
-  const [id, setId] = useState("");
+  const [user, setUser] = useState(null); // Initialize the user state to null, userState is used to modify the user state
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!user) {
       axios
+        // Get user profile by sending a GET request to the /auth/profile endpoint
+        // using the token stored in the browser's local storage as the authorization
+        // header
         .get("/auth/profile")
         .then(({ data }) => {
-          setUser(data);
-          setRole(data.role);
-          setId(data.id);
-          // show the user type and email in the console
-          console.log("User Type:", data.role, data.email, data.id);
-          setLoading(false);
+          const user = data; // Rename the response data to user for readability
+          setUser(user); // Set the user state to the user data
+          console.log("User Type:", user.role, user.email, user.id);
+          setLoading(false); //
         })
+        // If user is not found
         .catch(() => {
-          setUser(null);
-          setRole("");
-          setLoading(false);
+          console.log("catch block user not found");
+          setUser(null); // Set the user state to null
+          setLoading(false); // Set the loading state to false
         });
+      // If the user state is not null (i.e., the user is already logged in)
     } else {
+      console.log("else block user not null");
       setLoading(false);
     }
   }, [user]);
 
-  // Define isSignedIn function, which returns true if the user is signed in, or false if the user is not signed in
-  const isSignedIn = () => user !== null;
-
   return (
     // pass the role state to the value prop for the role-based access on the routes
-    <UserContext.Provider
-      value={{ user, setUser, role, loading, id, isSignedIn }}
-    >
+    <UserContext.Provider value={{ user, loading, setUser }}>
       {children}
     </UserContext.Provider>
   );

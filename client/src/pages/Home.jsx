@@ -4,11 +4,11 @@ import HomeJs from "../components/role-based/HomeJS";
 import HomeE from "../components/role-based/HomeE";
 
 export default function Home() {
-  const { role } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   return (
     <div>
-      {role === "job-seeker" && <HomeJs />}
-      {role === "employer" && <HomeE />}
+      {user.role === "job-seeker" && <HomeJs />}
+      {user.role === "employer" && <HomeE />}
     </div>
   );
 }

@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
+// Define structure of user document in MongoDB
 const userSchema = new mongoose.Schema({
   firstname: {
     type: String,
@@ -48,6 +49,7 @@ const userSchema = new mongoose.Schema({
   },
 });
 
+// Check if role is job-seeker or employer and initialize profile accordingly
 userSchema.pre("save", function (next) {
   if (this.role === "job-seeker") {
     this.profile = {
@@ -88,7 +90,12 @@ userSchema.pre("save", function (next) {
 });
 
 // CREATE MODEL
-const UserModel = mongoose.model("User", userSchema);
+// Create a model named "users" (a collection in MongoDB) based on the
+// structure defined in userSchema
+// Model can be used to interact with the "users" collection by:
+// 1. Saving data, by defining a new instance of the model and calling save()
+// 2. Querying data, by using methods like find(), findOne(), findById(), etc.
+const UserModel = mongoose.model("users", userSchema);
 
 // EXPORT MODEL
 module.exports = UserModel;

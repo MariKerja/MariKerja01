@@ -1,10 +1,25 @@
 import React, { useContext } from "react";
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 import { UserContext } from "../../context/UserContext"; // Update the import path as necessary
 
 export default function SideBar() {
-  const { user, loading } = useContext(UserContext);
+  const { setUser, loading } = useContext(UserContext);
+  const navigate = useNavigate();
 
+  const handleLogout = async () => {
+    try {
+      // Send a GET request to the /auth/logout endpoint to log out the user
+      // It will clear the token stored in the browser's local storage
+      const response = await axios.get("/auth/logout");
+      // Set the user state to null and redirect to the login page
+      setUser(null);
+      console.log(response.data.message);
+      navigate("/auth/login");
+    } catch (error) {
+      console.error("Logout failed:", error.response.data.error);
+    }
+  };
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -83,32 +98,30 @@ export default function SideBar() {
                 Activity
               </Link>
             </li>
-            {user && (
-              <li className="py-2 flex items-center">
-                <Link
-                  to="/logout"
-                  className="container max-width flex items-center gap-3 px-4 py-2 hover:bg-gray-400"
+            <li className="py-2 flex items-center">
+              <button
+                onClick={handleLogout}
+                className="container max-width flex items-center gap-3 px-4 py-2 hover:bg-gray-400 cursor-pointer"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="feather feather-log-out"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="feather feather-log-out"
-                  >
-                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-                    <polyline points="16 17 21 12 16 7"></polyline>
-                    <line x1="21" y1="12" x2="9" y2="12"></line>
-                  </svg>
-                  Log out
-                </Link>
-              </li>
-            )}
+                  <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                  <polyline points="16 17 21 12 16 7"></polyline>
+                  <line x1="21" y1="12" x2="9" y2="12"></line>
+                </svg>
+                Log out
+              </button>
+            </li>
           </ul>
         </div>
       </div>

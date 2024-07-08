@@ -4,11 +4,11 @@ import ProfileJS from "../components/role-based/ProfileJS";
 import ProfileE from "../components/role-based/ProfileE";
 
 export default function Profile() {
-  const { role } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   return (
     <div>
-      {role === "job-seeker" && <ProfileJS />}
-      {role === "employer" && <ProfileE />}
+      {user.role === "job-seeker" && <ProfileJS />}
+      {user.role === "employer" && <ProfileE />}
     </div>
   );
 }

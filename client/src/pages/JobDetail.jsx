@@ -1,16 +1,21 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import axios from "axios";
 import TopNav from "../components/TopNav";
+import { UserContext } from "../../context/UserContext";
 
 export default function JobDetail() {
   const { id } = useParams(); // Get jobId from URL parameters
   const navigate = useNavigate();
   const [job, setJob] = useState(null);
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
-    fetch(`http://localhost:8000/job/${id}`) // Adjust the URL as needed
-      .then((response) => response.json())
-      .then((data) => setJob(data))
+    console.log("fetching job details for job ID:", id);
+    axios
+      .get(`jobs/${id}`) // Adjust the URL as needed
+      .then((response) => setJob(response.data))
       .catch((error) => console.error("There was an error!", error));
   }, [id]); // Re-fetch job data when id changes
 
@@ -18,11 +23,32 @@ export default function JobDetail() {
     return <div>Loading...</div>;
   }
 
+  const handleApply = async () => {
+    console.log("JobDetail.jsx Entering handleApply");
+    const jobId = id;
+    console.log("JobDetail.jsx jobId: ", jobId);
+    const userId = user.id;
+    console.log("JobDetail.jsx userId: ", userId);
+    try {
+      const response = await axios.post(`/jobs/${id}/apply`, {
+        userId: userId,
+      });
+      toast.success(response.data.message);
+    } catch (error) {
+      console.error("Error applying for job:", error);
+      toast.error(
+        error.response?.data?.error ||
+          "An error occurred while applying for the job"
+      );
+    }
+    navigate(-1);
+  };
+
   return (
     <div className="flex h-screen bg-white">
       <div className="flex-1">
         {/* Sticky Navigation Bar */}
-        <TopNav title={job.jobname} href="/activitye" />
+        <TopNav title={job.jobname} />
         <div className="p-4">
           {" "}
           {/* Adjusted padding here */}
@@ -101,16 +127,19 @@ export default function JobDetail() {
             <div className="flex justify-end gap-4">
               <button
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                onClick={() => navigate("/listingjob")}
+                onClick={() => navigate(-1)}
               >
                 Back
               </button>
-              <button
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                onClick={() => navigate("/activitye")}
-              >
-                Apply Now
-              </button>
+              {/* Render the apply button only for job-seeker */}
+              {user.role === "job-seeker" && (
+                <button
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                  onClick={handleApply}
+                >
+                  Apply Now
+                </button>
+              )}
             </div>
           </div>
         </div>

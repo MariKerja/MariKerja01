@@ -44,10 +44,24 @@ const jobSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  applicants: [
+    {
+      applicantId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "users",
+        required: true,
+      },
+      status: {
+        type: String,
+        enum: ["applied", "rejected", "hired"],
+        default: "applied",
+      },
+    },
+  ],
 });
 
 // Create the model
-const Job = mongoose.model("Job", jobSchema);
+const Job = mongoose.model("jobs", jobSchema);
 
 // Export the model
 module.exports = Job;

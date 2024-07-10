@@ -38,7 +38,7 @@ export default function HomeJS() {
                   <tr key={index}>
                     <td className="border px-4 py-2">{index + 1}</td>
                     <td className="border px-4 py-2">
-                      <Link to={`/job/${job._id}`}>{job.jobname}</Link>
+                      <Link to={`/jobs/${job._id}`}>{job.jobname}</Link>
                     </td>
                     <td className="border px-4 py-2">{job.state}</td>
                     <td className="border px-4 py-2">{job.status}</td>

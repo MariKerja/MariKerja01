@@ -1,12 +1,28 @@
 import TopNavEmpty from "../TopNavEmpty";
+import { useContext, useState } from "react";
+import { UserContext } from "../../../context/UserContext";
+import useFetchUserProfile from "../../hooks/useFetchUserProfile";
+import { Link } from "react-router-dom";
 
 export default function ProfileE() {
+  const { user } = useContext(UserContext); // Use useContext to access the current user
+  const { userProfile, isLoading, error } = useFetchUserProfile(user?.id); // Use custom hook to fetch user profile
+
+  if (isLoading) {
+    console.log("Rendering loading state..."); // Debug: Check when loading state is rendered
+    return <div>Loading...</div>;
+  }
+  if (error) {
+    return <div>Error fetching data: {error.message}</div>;
+  }
+  if (!userProfile) {
+    return <div>User not found</div>;
+  }
+
   return (
     <div className="flex h-screen bg-white">
       <TopNavEmpty title="Profile" />
       <div>
-        {/* Sticky Navigation Bar */}
-        {/* User Information */}
         <div className="flex-1 p-8 text-left  ">
           <div className="mb-10 mt-10">
             <div className="w-full flex flex-col mb-4">
@@ -19,9 +35,9 @@ export default function ProfileE() {
               >
                 Name
               </label>
-              <a className="w-1/2 block  bg-white rounded border border-0.25 border-gray-400 text-black py-1 px-3">
-                Muniir Ahmadi
-              </a>
+              <p className="w-1/2 block  bg-white rounded border border-0.25 border-gray-400 text-black py-1 px-3">
+                {userProfile.firstname} {userProfile.lastname}
+              </p>
             </div>
             <div className="w-full flex flex-col mb-4">
               <label
@@ -30,9 +46,9 @@ export default function ProfileE() {
               >
                 Email Address
               </label>
-              <a className="w-1/2 block  bg-white rounded border border-0.25 border-gray-400 text-black py-1 px-3">
-                email@domain.com
-              </a>
+              <p className="w-1/2 block  bg-white rounded border border-0.25 border-gray-400 text-black py-1 px-3">
+                {userProfile.email}
+              </p>
             </div>
             <div className="w-full flex gap-2 justify-start mb-4">
               <label
@@ -41,15 +57,15 @@ export default function ProfileE() {
               >
                 Date of Birth
               </label>
-              <a className="w-20 block  bg-white rounded border border-0.25 border-gray-400 text-black py-1 px-3">
-                25
-              </a>
-              <a className="w-20 block  bg-white rounded border border-0.25 border-gray-400 text-black py-1 px-3">
-                May
-              </a>
-              <a className="w-20 block  bg-white rounded border border-0.25 border-gray-400 text-black py-1 px-3">
-                2024
-              </a>
+              <p className="w-20 block  bg-white rounded border border-0.25 border-gray-400 text-black py-1 px-3">
+                {userProfile.dateOfBirth.day}
+              </p>
+              <p className="w-20 block  bg-white rounded border border-0.25 border-gray-400 text-black py-1 px-3">
+                {userProfile.dateOfBirth.month}
+              </p>
+              <p className="w-20 block  bg-white rounded border border-0.25 border-gray-400 text-black py-1 px-3">
+                {userProfile.dateOfBirth.year}
+              </p>
             </div>
             <div className="w-full flex gap-2 justify-start mb-4">
               <label
@@ -58,29 +74,15 @@ export default function ProfileE() {
               >
                 Gender
               </label>
-              <a className="w-20 block  bg-white rounded border border-0.25 border-gray-400 text-black py-1 px-3">
-                Male
-              </a>
+              <p className="w-20 block  bg-white rounded border border-0.25 border-gray-400 text-black py-1 px-3">
+                {userProfile.gender}
+              </p>
             </div>
-            <button className="mb-4 px-4 py-2 bg-blue-500 text-white rounded">
-              Edit Profile
-            </button>
           </div>
 
-          {/* Resume Information */}
+          {/* Resume */}
           <div className="mb-4">
             <h2 className="text-2xl font-bold text-left mb-4">Resume</h2>
-            <div className="w-full flex flex-col mb-4">
-              <label
-                htmlFor="FullName"
-                className="w-full justify-start block text-black font-medium mb-0"
-              >
-                Full Name
-              </label>
-              <a className="w-2/3 block  bg-white rounded border border-0.25 border-gray-400 text-black py-1 px-3">
-                Madisson Dull
-              </a>
-            </div>
             <div className="w-full flex flex-col mb-4">
               <label
                 htmlFor="ContactNumber"
@@ -88,9 +90,9 @@ export default function ProfileE() {
               >
                 Contact Number
               </label>
-              <a className="w-2/3 block  bg-white rounded border border-0.25 border-gray-400 text-black py-1 px-3">
-                01234567890
-              </a>
+              <p className="w-2/3 block  bg-white rounded border border-0.25 border-gray-400 text-black py-1 px-3">
+                {userProfile.profile.resume.contactNumber}
+              </p>
             </div>
             <div className="w-full flex flex-col mb-4">
               <label
@@ -99,55 +101,48 @@ export default function ProfileE() {
               >
                 Address
               </label>
-              <a className="w-2/3 block  bg-white rounded border border-0.25 border-gray-400 text-black py-1 px-3">
-                1234 Elm Street Apt. 56B Springfield, IL 62704 United States
-              </a>
-            </div>
-            <div className="w-full flex flex-col mb-4">
-              <label
-                htmlFor="AboutMe"
-                className="w-full justify-start block text-black font-medium mb-0"
-              >
-                About Me
-              </label>
-              <a className="w-2/3 h-40 block bg-white rounded border border-0.25 border-gray-400 text-black py-1 px-3">
-                Employment status typically refers to whether a position is
-                full-time or part-time. Full-time employees generally work
-                between 35-40 hours per week and often receive benefits like
-                health insurance, retirement plans, and paid time off.
-              </a>
-            </div>
-            <div className="w-full flex flex-col mb-4">
-              <label
-                htmlFor="Education"
-                className="w-full justify-start block text-black font-medium mb-0"
-              >
-                Education
-              </label>
-              <a className="w-2/3 h-40 block  bg-white rounded border border-0.25 border-gray-400 text-black py-1 px-3">
-                Employment status typically refers to whether a position is
-                full-time or part-time. Full-time employees generally work
-                between 35-40 hours per week and often receive benefits like
-                health insurance, retirement plans, and paid time off.
-              </a>
+              <p className="w-2/3 h-40 block bg-white rounded border border-0.25 border-gray-400 text-black py-1 px-3">
+                {userProfile.profile.resume.address}
+              </p>
             </div>
             <div className="w-full flex flex-col mb-4">
               <label
                 htmlFor="website"
                 className="w-full justify-start block text-black font-medium mb-0"
               >
-                Persona Skill
+                About Me
               </label>
-              <a className="w-2/3 h-40 block  bg-white rounded border border-0.25 border-gray-400 text-black py-1 px-3">
-                Employment status typically refers to whether a position is
-                full-time or part-time. Full-time employees generally work
-                between 35-40 hours per week and often receive benefits like
-                health insurance, retirement plans, and paid time off.
-              </a>
+              <p className="w-2/3 h-40 block  bg-white rounded border border-0.25 border-gray-400 text-black py-1 px-3">
+                {userProfile.profile.resume.about}
+              </p>
             </div>
-            <button className="mb-4 px-4 py-2 bg-blue-500 text-white rounded">
-              Edit Resume
-            </button>
+            <div className="w-full flex flex-col mb-4">
+              <label
+                htmlFor="website"
+                className="w-full justify-start block text-black font-medium mb-0"
+              >
+                Education
+              </label>
+              <p className="w-2/3 h-40 block  bg-white rounded border border-0.25 border-gray-400 text-black py-1 px-3">
+                {userProfile.profile.resume.education}
+              </p>
+            </div>
+            <div className="w-full flex flex-col mb-4">
+              <label
+                htmlFor="website"
+                className="w-full justify-start block text-black font-medium mb-0"
+              >
+                Personal Skills
+              </label>
+              <p className="w-2/3 h-40 block  bg-white rounded border border-0.25 border-gray-400 text-black py-1 px-3">
+                {userProfile.profile.resume.skills}
+              </p>
+            </div>
+            <Link to="/profile/edit">
+              <button className="mb-4 px-4 py-2 bg-blue-500 text-white rounded">
+                Edit Information
+              </button>
+            </Link>
           </div>
         </div>
       </div>

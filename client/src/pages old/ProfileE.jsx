@@ -158,9 +158,11 @@ export default function ProfileE() {
                 health insurance, retirement plans, and paid time off.
               </a>
             </div>
-            <button className="mb-4 px-4 py-2 bg-blue-500 text-white rounded">
-              Edit Information
-            </button>
+            <Link to="profile/edit">
+              <button className="mb-4 px-4 py-2 bg-blue-500 text-white rounded">
+                Edit Information
+              </button>
+            </Link>
           </div>
         </div>
       </div>

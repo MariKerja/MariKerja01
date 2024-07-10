@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 const authRoutes = require("./routes/authRoutes"); // Assuming you have auth routes defined in ./routes/authRoutes
 const jobRoutes = require("./routes/jobRoutes"); // Assuming you have job routes defined in ./routes/jobRoutes
+const userRoutes = require("./routes/userRoutes"); // Assuming you have user routes defined in ./routes/userRoutes
 
 dotenv.config(); // Load environment variables from .env file
 const app = express();
@@ -28,6 +29,7 @@ app.use(express.urlencoded({ extended: false })); // Parse URL-encoded bodies
 // Routes
 app.use("/auth", authRoutes); // Mount authentication routes at '/auth'
 app.use("/jobs", jobRoutes); // Mount job routes at '/jobs'
+app.use("/users", userRoutes); // Mount user routes at '/users'
 
 const port = process.env.PORT || 8000; // Use defined port or default to 8000
 app.listen(port, () => console.log(`Server is running on port ${port}`));
